@@ -33,6 +33,13 @@ export class CustomerDetailComponent implements OnInit {
     }
   }
 
+  delete(): void {
+    if (this.customer) {
+      this.customerService.deleteCustomer(this.customer)
+        .subscribe(() => this.goBack());
+    }
+  }
+
   goBack(): void {
     this.location.back();
   }

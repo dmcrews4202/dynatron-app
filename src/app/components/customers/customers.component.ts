@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { PageEvent } from '@angular/material/paginator';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { Customer } from 'src/app/models/customer';
 import { CustomerService } from 'src/app/services/customer/customer.service';
@@ -9,7 +9,10 @@ import { CustomerService } from 'src/app/services/customer/customer.service';
   templateUrl: './customers.component.html',
   styleUrls: ['./customers.component.css']
 })
-export class CustomersComponent implements OnInit {
+export class CustomersComponent implements OnInit, AfterViewInit {
+
+  @ViewChild(MatPaginator) pagintor!: MatPaginator;
+
   customers: Customer[] = [];
   currentIndex = -1;
 
@@ -24,29 +27,48 @@ export class CustomersComponent implements OnInit {
 
   }
 
+  ngAfterViewInit(): void {
+    //while (this.pagintor.pageIndex < this.pageIndex)
+    //  this.pagintor.nextPage();
+  }
+
   getCustomers(): void {
     this.customerService.getCustomers()
       .subscribe(customers => {
         this.customers = customers;
         this.length = this.customers.length;
-        this.activePageSlice = this.customers.slice(0, this.pageSize);
+        let page = sessionStorage.getItem('page');
+        if (page != null) {
+          let pageIndex = parseInt(page);
+          this.pageIndex = pageIndex;
+          //while (this.pagintor.pageIndex < this.pageIndex)
+          //  this.pagintor.nextPage();
+    
+        }
         let data = sessionStorage.getItem('data');
         if (data != null) {
           let index = parseInt(data);
           this.currentIndex = index;
         }
+        let firstCut = this.pageIndex * this.pageSize;
+        let secondCut = firstCut + this.pageSize;
+    
+        this.activePageSlice = this.customers.slice(firstCut, secondCut);
+
+
     
       });
 
   }
 
-  selectCustomer(index: number) {
-    this.storeCustomer(index);
+  selectCustomer(index: number,customer: Customer) {
+    this.storeCustomer(index,customer);
     this.router.navigate(['details',index]);
   }
 
-  storeCustomer(index: number) {
-    sessionStorage.setItem('data',index.toString());
+  storeCustomer(index: number, customer: Customer) {
+    sessionStorage.setItem('data',customer.id!.toString());
+    sessionStorage.setItem('page',this.pageIndex.toString());
   }
   activePageSlice: Customer[] = [];
 
@@ -55,7 +77,7 @@ export class CustomersComponent implements OnInit {
   pageSize = 10;
   pageIndex = 0;
   onPageChanged(e: PageEvent) {
-    this.currentIndex = -1;
+    //this.currentIndex = -1;
     this.pageEvent = e;
     this.length = e.length;
     this.pageSize = e.pageSize;

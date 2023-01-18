@@ -12,31 +12,32 @@
         </tr>
         <tr>
             <td>
-                <label for="customer-firstname">Last Name: </label>
+                <label for="customer-lastname">Last Name: </label>
             </td>
             <td>
-                <input id="customer-firstname" [(ngModel)]="customer.lastName" placeholder="fname">
+                <input id="customer-lastname" [(ngModel)]="customer.lastName" placeholder="fname">
             </td>            
         </tr>
         <tr>
             <td>
-                <label for="customer-firstname">Email: </label>
+                <label for="customer-email">Email: </label>
             </td>
             <td>
-                <input id="customer-firstname" [(ngModel)]="customer.email" placeholder="fname">
+                <input id="customer-email" [(ngModel)]="customer.email" placeholder="fname">
             </td>
         </tr>
     </table>
     <div><label>     </label></div>
     <div>
-        <label for="customer-firstname">Created: </label>
-        <label id="customer-firstname">{{customer.created}}</label>
+        <label >Created: </label>
+        <label >&nbsp;{{customer.created | date:'medium'}}</label>
     </div>
     <div>
-        <label for="customer-firstname">Updated: </label>
-        <label id="customer-firstname">{{customer.updated}}</label>
+        <label >Updated: </label>
+        <label >&nbsp;{{customer.updated | date:'medium'}}</label>
     </div>
 
-    <button type="button" (click)="goBack()">go back</button>
-    <button type="button" (click)="save()">save</button>
+    <button mat-raised-button (click)="goBack()">go back</button>
+    <button mat-raised-button color="primary" (click)="save()">save</button>
+    <button mat-raised-button color="warn" (click)="delete()">delete</button>
 </div>
