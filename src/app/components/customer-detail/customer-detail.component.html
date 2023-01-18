@@ -1,0 +1,42 @@
+<div *ngIf="customer">
+    <h2>Details</h2>
+    <span class="h4">id: {{customer.id}} {{customer.firstName}} {{customer.lastName}}</span>
+    <table>
+        <tr>
+            <td>
+                <label for="customer-firstname">First Name: </label>
+            </td>
+            <td>
+                <input id="customer-firstname" [(ngModel)]="customer.firstName" placeholder="fname">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="customer-firstname">Last Name: </label>
+            </td>
+            <td>
+                <input id="customer-firstname" [(ngModel)]="customer.lastName" placeholder="fname">
+            </td>            
+        </tr>
+        <tr>
+            <td>
+                <label for="customer-firstname">Email: </label>
+            </td>
+            <td>
+                <input id="customer-firstname" [(ngModel)]="customer.email" placeholder="fname">
+            </td>
+        </tr>
+    </table>
+    <div><label>     </label></div>
+    <div>
+        <label for="customer-firstname">Created: </label>
+        <label id="customer-firstname">{{customer.created}}</label>
+    </div>
+    <div>
+        <label for="customer-firstname">Updated: </label>
+        <label id="customer-firstname">{{customer.updated}}</label>
+    </div>
+
+    <button type="button" (click)="goBack()">go back</button>
+    <button type="button" (click)="save()">save</button>
+</div>
